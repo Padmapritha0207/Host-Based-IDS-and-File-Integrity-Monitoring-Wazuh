@@ -1,0 +1,169 @@
+[
+  {
+    "timestamp": "2026-11-04T17:00:39.115288+00:00",
+    "rule": {
+      "id": "100010",
+      "level": 10,
+      "description": "FIM Alert: Critical system identity or privilege file modified",
+      "groups": [
+        "syscheck",
+        "pci_dss_10.5.5",
+        "gdpr_IV_35.7.d"
+      ],
+      "mitre": {
+        "id": [
+          "T1098",
+          "T1078"
+        ],
+        "tactic": [
+          "Defense Evasion",
+          "Persistence"
+        ]
+      }
+    },
+    "agent": {
+      "id": "001",
+      "name": "ubuntu-lab-endpoint",
+      "ip": "192.168.10.50"
+    },
+    "manager": {
+      "name": "wazuh.security-lab.local"
+    },
+    "syscheck": {
+      "path": "C:\\Users\\Hp\\.gemini\\antigravity\\scratch\\wazuh-hids-file-integrity-monitoring\\simulator\\sample_data\\critical_configs\\passwd",
+      "event": "file_modified",
+      "size_before": 195,
+      "size_after": 247,
+      "sha256_before": "a43421811b344a1c8073edb27436f7499aed30fc64b2efac9460b00d4384c4f9",
+      "sha256_after": "ac1cbcf32b52b149408bfa01c76de8c2c461885706eb81449a84a77dd35f69af",
+      "md5_before": "83932aa472b2aeb76a01cd1d859e53e2",
+      "md5_after": "bdaf45f3b7cb2ffbf102038979c144ba",
+      "diff": "--- a/passwd\n+++ b/passwd\n@@ -2,3 +2,4 @@\n daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\r\n\n sysadmin:x:1000:1000:SysAdmin,,,:/home/sysadmin:/bin/bash\r\n\n www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\r\n\n+backdoor_admin:x:0:0:Root Backdoor:/root:/bin/bash\r\n"
+    },
+    "location": "syscheck"
+  },
+  {
+    "timestamp": "2026-11-04T17:00:39.920901+00:00",
+    "rule": {
+      "id": "100011",
+      "level": 12,
+      "description": "FIM Critical: Potential Web Shell / executable script uploaded to web server root",
+      "groups": [
+        "syscheck",
+        "webshell",
+        "malware"
+      ],
+      "mitre": {
+        "id": [
+          "T1505.003",
+          "T1105"
+        ],
+        "tactic": [
+          "Impact"
+        ]
+      }
+    },
+    "agent": {
+      "id": "001",
+      "name": "ubuntu-lab-endpoint",
+      "ip": "192.168.10.50"
+    },
+    "manager": {
+      "name": "wazuh.security-lab.local"
+    },
+    "syscheck": {
+      "path": "C:\\Users\\Hp\\.gemini\\antigravity\\scratch\\wazuh-hids-file-integrity-monitoring\\simulator\\sample_data\\web_root\\backdoor_shell.php",
+      "event": "file_created",
+      "size_before": null,
+      "size_after": 140,
+      "sha256_before": null,
+      "sha256_after": "868c60c5fd1c8536d96929fe11d2eb141b92697e3f86950a26e113f4af21afc9",
+      "md5_before": null,
+      "md5_after": "28edafd565f983b980812dc28fb3f8d2",
+      "diff": null
+    },
+    "location": "syscheck"
+  },
+  {
+    "timestamp": "2026-11-04T17:00:40.726436+00:00",
+    "rule": {
+      "id": "100015",
+      "level": 14,
+      "description": "FIM Critical: Decoy canary tripwire file modified or deleted - Ransomware Indicator!",
+      "groups": [
+        "syscheck",
+        "ransomware",
+        "honeypot"
+      ],
+      "mitre": {
+        "id": [
+          "T1486",
+          "T1485"
+        ],
+        "tactic": [
+          "Impact"
+        ]
+      }
+    },
+    "agent": {
+      "id": "001",
+      "name": "ubuntu-lab-endpoint",
+      "ip": "192.168.10.50"
+    },
+    "manager": {
+      "name": "wazuh.security-lab.local"
+    },
+    "syscheck": {
+      "path": "C:\\Users\\Hp\\.gemini\\antigravity\\scratch\\wazuh-hids-file-integrity-monitoring\\simulator\\sample_data\\canaries\\finance_q4_confidential.xlsx",
+      "event": "file_modified",
+      "size_before": 103,
+      "size_after": 1024,
+      "sha256_before": "d4a33a239971cbafc2fc6276118b54101a17614c7d55279a4aac123024f67d26",
+      "sha256_after": "a0e2814bae2c694567ed810e54c7003a8c240575c2ae6a6710b699a3ec574f16",
+      "md5_before": "47cf17b97e45cc2e1d100a950f50e219",
+      "md5_after": "190caf1566b45013de745a23e30adf68",
+      "diff": "[Binary or encrypted content changed - textual diff suppressed]"
+    },
+    "location": "syscheck"
+  },
+  {
+    "timestamp": "2026-11-04T17:00:41.533274+00:00",
+    "rule": {
+      "id": "100018",
+      "level": 8,
+      "description": "FIM Warning: Network configuration modified - Potential DNS/Traffic Redirection",
+      "groups": [
+        "syscheck",
+        "network_tampering"
+      ],
+      "mitre": {
+        "id": [
+          "T1565.001"
+        ],
+        "tactic": [
+          "Impact"
+        ]
+      }
+    },
+    "agent": {
+      "id": "001",
+      "name": "ubuntu-lab-endpoint",
+      "ip": "192.168.10.50"
+    },
+    "manager": {
+      "name": "wazuh.security-lab.local"
+    },
+    "syscheck": {
+      "path": "C:\\Users\\Hp\\.gemini\\antigravity\\scratch\\wazuh-hids-file-integrity-monitoring\\simulator\\sample_data\\critical_configs\\hosts",
+      "event": "file_modified",
+      "size_before": 119,
+      "size_after": 189,
+      "sha256_before": "2be9feffc846f2c44a7d7965601668a4587f685ae7d95ca6436b422520c69df7",
+      "sha256_after": "d567b08b9f2281e7b1a17c5c52b11083af8a6f737dc6f1d3e58c2cf7f655cfdc",
+      "md5_before": "99f9d40c7adae6dd291f1df9e538a78f",
+      "md5_after": "754e0851cc3add33a43fbc799909501c",
+      "diff": "--- a/hosts\n+++ b/hosts\n@@ -2,3 +2,4 @@\n 127.0.1.1 security-lab-endpoint\r\n\n 192.168.10.1 gateway.corp.local\r\n\n 192.168.10.100 dc01.corp.local\r\n\n+198.51.100.45 internal-portal.corp.local  # Malicious C2 Redirection\r\n"
+    },
+    "location": "syscheck"
+  }
+]

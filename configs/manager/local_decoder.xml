@@ -1,0 +1,26 @@
+<!--
+  Custom Wazuh / OSSEC Decoders
+  Project: Host-based IDS & FIM Lab
+-->
+
+<!-- Custom Decoder for Application Tripwire Canary Logger -->
+<decoder name="tripwire-canary">
+  <prematch>^TRIPWIRE_CANARY:</prematch>
+</decoder>
+
+<decoder name="tripwire-canary-fields">
+  <parent>tripwire-canary</parent>
+  <regex offset="after_parent">^ \[(\w+)\] path="([^"]+)" event="([^"]+)" user="([^"]+)"</regex>
+  <order>status, url, action, srcuser</order>
+</decoder>
+
+<!-- Custom Decoder for Sudo Unauthorized Elevation Tracker -->
+<decoder name="sudo-tamper-guard">
+  <prematch>^SUDO_GUARD:</prematch>
+</decoder>
+
+<decoder name="sudo-tamper-guard-fields">
+  <parent>sudo-tamper-guard</parent>
+  <regex offset="after_parent">^ user="([^"]+)" tty="([^"]+)" cmd="([^"]+)" integrity_violation="([^"]+)"</regex>
+  <order>dstuser, id, extra_data, status</order>
+</decoder>

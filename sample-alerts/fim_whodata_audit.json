@@ -1,0 +1,42 @@
+{
+  "timestamp": "2026-11-04T17:00:39.925Z",
+  "rule": {
+    "level": 10,
+    "description": "FIM Whodata: File modified with process and user attribution: /etc/passwd",
+    "id": "100010",
+    "mitre": {
+      "id": ["T1098"],
+      "tactic": ["Persistence"]
+    },
+    "groups": ["syscheck", "whodata", "auditd"]
+  },
+  "agent": {
+    "id": "001",
+    "name": "ubuntu-lab-endpoint",
+    "ip": "192.168.10.50"
+  },
+  "syscheck": {
+    "path": "/etc/passwd",
+    "event": "modified",
+    "mode": "whodata",
+    "sha256_after": "ac1cbcf32b52b149408bfa01c76de8c2c461885706eb81449a84a77dd35f69af",
+    "audit": {
+      "type": "whodata",
+      "user": {
+        "id": "0",
+        "name": "root"
+      },
+      "login_user": {
+        "id": "1000",
+        "name": "attacker_session"
+      },
+      "process": {
+        "id": "14820",
+        "name": "/usr/bin/python3",
+        "parent_id": "14790",
+        "parent_name": "/bin/bash"
+      }
+    }
+  },
+  "location": "syscheck"
+}

@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-11-04T17:00:39.920Z",
+  "rule": {
+    "level": 12,
+    "description": "FIM Critical: Potential Web Shell / executable script uploaded to web server root: /var/www/html/backdoor_shell.php",
+    "id": "100011",
+    "mitre": {
+      "id": ["T1505.003", "T1105"],
+      "tactic": ["Persistence", "Command and Control"],
+      "technique": ["Server Software Component: Web Shell", "Ingress Tool Transfer"]
+    },
+    "groups": ["syscheck", "webshell", "malware", "pci_dss_11.5"],
+    "pci_dss": ["11.5"]
+  },
+  "agent": {
+    "id": "001",
+    "name": "ubuntu-lab-endpoint",
+    "ip": "192.168.10.50"
+  },
+  "manager": {
+    "name": "wazuh.security-lab.local"
+  },
+  "id": "1699117239.102346",
+  "full_log": "New file '/var/www/html/backdoor_shell.php' added\nMode: realtime\nAttributes: size, perm, uid, gid, md5, sha1, sha256\nSize: '158'\nPermissions: '0644'\nOwner: 'www-data (33)'\nGroup: 'www-data (33)'\nSha256: '868c60c5fd1c8536d96929fe11d2eb141b92697e3f86950a26e113f4af21afc9'\n",
+  "syscheck": {
+    "path": "/var/www/html/backdoor_shell.php",
+    "mode": "realtime",
+    "size_after": "158",
+    "perm_after": "rw-r--r--",
+    "uid_after": "33",
+    "gid_after": "33",
+    "uname_after": "www-data",
+    "gname_after": "www-data",
+    "sha256_after": "868c60c5fd1c8536d96929fe11d2eb141b92697e3f86950a26e113f4af21afc9",
+    "event": "added"
+  },
+  "decoder": {
+    "name": "syscheck_new_entry"
+  },
+  "location": "syscheck"
+}

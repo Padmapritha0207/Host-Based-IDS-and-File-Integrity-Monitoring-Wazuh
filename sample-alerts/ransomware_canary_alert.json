@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-11-04T17:00:40.726Z",
+  "rule": {
+    "level": 14,
+    "description": "FIM Critical: Decoy canary tripwire file modified or deleted: /var/canaries/finance_q4_confidential.xlsx - Active Ransomware / Data Destruction Indicator!",
+    "id": "100015",
+    "mitre": {
+      "id": ["T1486", "T1485"],
+      "tactic": ["Impact"],
+      "technique": ["Data Encrypted for Impact", "Data Destruction"]
+    },
+    "groups": ["syscheck", "ransomware", "honeypot", "tripwire"]
+  },
+  "agent": {
+    "id": "001",
+    "name": "ubuntu-lab-endpoint",
+    "ip": "192.168.10.50"
+  },
+  "syscheck": {
+    "path": "/var/canaries/finance_q4_confidential.xlsx",
+    "event": "modified",
+    "mode": "realtime",
+    "sha256_before": "d4a33a239971cbafc2fc6276118b54101a17614c7d55279a4aac123024f67d26",
+    "sha256_after": "a0e2814bae2c694567ed810e54c7003a8c240575c2ae6a6710b699a3ec574f16",
+    "size_before": "124",
+    "size_after": "2048",
+    "diff": "[Binary or encrypted content changed - textual diff suppressed]"
+  },
+  "location": "syscheck"
+}

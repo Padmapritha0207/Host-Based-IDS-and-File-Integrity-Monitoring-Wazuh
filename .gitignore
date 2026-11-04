@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# IDE & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Docker & Logs
+*.log
+wazuh-indexer-data/
+wazuh-manager-data/
+
+# Temporary simulation runtime files
+simulator/sample_data/
+!simulator/sample_data/.gitkeep

@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-11-04T17:00:39.115Z",
+  "rule": {
+    "level": 10,
+    "description": "FIM Alert: Critical system identity or privilege file modified: /etc/passwd",
+    "id": "100010",
+    "mitre": {
+      "id": ["T1098", "T1078"],
+      "tactic": ["Persistence", "Privilege Escalation"],
+      "technique": ["Account Manipulation", "Valid Accounts"]
+    },
+    "groups": ["syscheck", "fim_custom", "pci_dss_10.5.5", "gdpr_IV_35.7.d"],
+    "pci_dss": ["10.5.5"],
+    "gdpr": ["IV_35.7.d"]
+  },
+  "agent": {
+    "id": "001",
+    "name": "ubuntu-lab-endpoint",
+    "ip": "192.168.10.50"
+  },
+  "manager": {
+    "name": "wazuh.security-lab.local"
+  },
+  "id": "1699117239.102345",
+  "full_log": "File '/etc/passwd' modified\nMode: realtime\nChanged attributes: size, mtime, md5, sha1, sha256\nSize changed from '1840' to '1892'\nOld md5sum was: '6a43f87b89d4128f090b8e998129e92a'\nNew md5sum is : 'b82143de89fa1209384bb28938d9f112'\nOld sha256sum was: 'a43421811b344a1c8073edb27436f7499aed30fc64b2efac9460b00d4384c4f9'\nNew sha256sum is : 'ac1cbcf32b52b149408bfa01c76de8c2c461885706eb81449a84a77dd35f69af'\nWhat changed:\n4a5\n> backdoor_admin:x:0:0:Root Backdoor:/root:/bin/bash\n",
+  "syscheck": {
+    "path": "/etc/passwd",
+    "mode": "realtime",
+    "size_before": "1840",
+    "size_after": "1892",
+    "md5_before": "6a43f87b89d4128f090b8e998129e92a",
+    "md5_after": "b82143de89fa1209384bb28938d9f112",
+    "sha1_before": "4f9d010e6a67f1b63ef50f4a860cb67e5bb1a293",
+    "sha1_after": "5b2671e6ac823ba4c1029e84fc9e19bb927af801",
+    "sha256_before": "a43421811b344a1c8073edb27436f7499aed30fc64b2efac9460b00d4384c4f9",
+    "sha256_after": "ac1cbcf32b52b149408bfa01c76de8c2c461885706eb81449a84a77dd35f69af",
+    "diff": "--- /etc/passwd\n+++ /etc/passwd\n@@ -24,3 +24,4 @@\n sysadmin:x:1000:1000:SysAdmin,,,:/home/sysadmin:/bin/bash\n www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\n+backdoor_admin:x:0:0:Root Backdoor:/root:/bin/bash\n",
+    "event": "modified"
+  },
+  "decoder": {
+    "name": "syscheck_integrity_changed"
+  },
+  "location": "syscheck"
+}

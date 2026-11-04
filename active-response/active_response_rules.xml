@@ -1,0 +1,42 @@
+<!--
+  Wazuh Active Response Configuration Mapping
+  Defines how alerts correlate to automated quarantine & containment actions
+-->
+<ossec_config>
+  <!-- Command Definitions -->
+  <command>
+    <name>quarantine-file-linux</name>
+    <executable>quarantine_file.sh</executable>
+    <expect>path</expect>
+    <timeout_allowed>no</timeout_allowed>
+  </command>
+
+  <command>
+    <name>quarantine-file-windows</name>
+    <executable>powershell.exe -ExecutionPolicy Bypass -File C:\var\ossec\active-response\bin\quarantine_file.ps1</executable>
+    <expect>path</expect>
+    <timeout_allowed>no</timeout_allowed>
+  </command>
+
+  <command>
+    <name>firewall-drop</name>
+    <executable>firewall-drop</executable>
+    <expect>srcip</expect>
+    <timeout_allowed>yes</timeout_allowed>
+  </command>
+
+  <!-- Active Response Trigger: Web shell uploaded to web root -->
+  <active-response>
+    <command>quarantine-file-linux</command>
+    <location>local</location>
+    <rules_id>100011</rules_id>
+  </active-response>
+
+  <!-- Active Response Trigger: Repeated SSH brute force authentication attempts -->
+  <active-response>
+    <command>firewall-drop</command>
+    <location>local</location>
+    <rules_id>100020</rules_id>
+    <timeout>1800</timeout> <!-- Block for 30 minutes -->
+  </active-response>
+</ossec_config>

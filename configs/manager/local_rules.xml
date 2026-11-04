@@ -1,0 +1,126 @@
+<!--
+  Custom Wazuh / OSSEC Rules for Host-based Intrusion Detection & File Integrity Monitoring
+  Project: Host-based IDS & FIM Lab
+-->
+<group name="syscheck,fim_custom,">
+
+  <!-- Rule 100010: Critical Linux Identity / Auth Files Tampered -->
+  <rule id="100010" level="10">
+    <if_group>syscheck</if_group>
+    <match>/etc/passwd|/etc/shadow|/etc/sudoers|/etc/group</match>
+    <description>FIM Alert: Critical system identity or privilege file modified: $(syscheck.path)</description>
+    <mitre>
+      <id>T1098</id>
+      <id>T1078</id>
+    </mitre>
+    <group>syscheck,pci_dss_10.5.5,gdpr_IV_35.7.d,hipaa_164.312.b,nist_800_53_AU.14,tsc_CC6.1,tsc_CC6.8,</group>
+  </rule>
+
+  <!-- Rule 100011: Web Shell Creation or Dropped Script in Web Root -->
+  <rule id="100011" level="12">
+    <if_group>syscheck</if_group>
+    <match>/var/www/html/.*\.(php|phtml|php5|py|pl|sh|cgi|jsp|asp|aspx)$</match>
+    <options>alert_by_email</options>
+    <description>FIM Critical: Potential Web Shell / executable script uploaded to web server root: $(syscheck.path)</description>
+    <mitre>
+      <id>T1505.003</id>
+      <id>T1105</id>
+    </mitre>
+    <group>syscheck,webshell,malware,pci_dss_11.5,</group>
+  </rule>
+
+  <!-- Rule 100012: SSH Authorized Keys Modification / Backdoor Injection -->
+  <rule id="100012" level="10">
+    <if_group>syscheck</if_group>
+    <match>/\.ssh/authorized_keys</match>
+    <description>FIM Alert: SSH authorized_keys file modified or created - Potential persistent backdoor access</description>
+    <mitre>
+      <id>T1098.004</id>
+    </mitre>
+    <group>syscheck,persistence,pci_dss_10.5.5,</group>
+  </rule>
+
+  <!-- Rule 100013: Critical System Binary Replacement or Modification -->
+  <rule id="100013" level="12">
+    <if_group>syscheck</if_group>
+    <match>^/bin/|^/sbin/|^/usr/bin/|^/usr/sbin/</match>
+    <description>FIM Alert: System core binary modified or replaced: $(syscheck.path) - Potential Rootkit / Trojan</description>
+    <mitre>
+      <id>T1036.005</id>
+      <id>T1565.001</id>
+    </mitre>
+    <group>syscheck,rootkit,integrity_compromise,</group>
+  </rule>
+
+  <!-- Rule 100014: Scheduled Tasks & Cron Persistence Modification -->
+  <rule id="100014" level="9">
+    <if_group>syscheck</if_group>
+    <match>/etc/cron|/var/spool/cron</match>
+    <description>FIM Alert: Cron scheduling configuration modified: $(syscheck.path) - Potential persistence mechanism</description>
+    <mitre>
+      <id>T1053.003</id>
+    </mitre>
+    <group>syscheck,persistence,</group>
+  </rule>
+
+  <!-- Rule 100015: Ransomware Canary / Tripwire File Tampering -->
+  <rule id="100015" level="14">
+    <if_group>syscheck</if_group>
+    <match>/canaries/|C:\\canaries\\</match>
+    <options>alert_by_email</options>
+    <description>FIM Critical: Decoy canary tripwire file modified or deleted: $(syscheck.path) - Active Ransomware / Data Destruction Indicator!</description>
+    <mitre>
+      <id>T1486</id>
+      <id>T1485</id>
+    </mitre>
+    <group>syscheck,ransomware,honeypot,tripwire,</group>
+  </rule>
+
+  <!-- Rule 100016: High-Frequency Mass File Alterations (Ransomware Heuristic) -->
+  <rule id="100016" level="13" frequency="8" timeframe="30">
+    <if_matched_group>syscheck</if_matched_group>
+    <description>FIM Critical: High frequency of file modifications detected within 30 seconds - Potential automated encryption activity</description>
+    <mitre>
+      <id>T1486</id>
+    </mitre>
+    <group>syscheck,mass_alteration,ransomware,</group>
+  </rule>
+
+  <!-- Rule 100017: Windows Registry Persistence (Run / RunOnce Keys) -->
+  <rule id="100017" level="11">
+    <if_group>syscheck</if_group>
+    <match>HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Run</match>
+    <description>FIM Alert: Windows Startup Registry Run key modified - Potential Autostart persistence mechanism</description>
+    <mitre>
+      <id>T1547.001</id>
+    </mitre>
+    <group>syscheck,windows_registry,persistence,</group>
+  </rule>
+
+  <!-- Rule 100018: Host Network Configuration Tampering (/etc/hosts, resolv.conf) -->
+  <rule id="100018" level="8">
+    <if_group>syscheck</if_group>
+    <match>/etc/hosts|/etc/network/interfaces|/etc/netplan</match>
+    <description>FIM Warning: Network resolution or interface configuration modified: $(syscheck.path) - Potential DNS Hijack or Redirection</description>
+    <mitre>
+      <id>T1565.001</id>
+    </mitre>
+    <group>syscheck,network_tampering,</group>
+  </rule>
+
+</group>
+
+<group name="authentication,sshd,bruteforce,">
+
+  <!-- Rule 100020: Aggressive SSH Brute Force Detection (Triggers Active Response IP Block) -->
+  <rule id="100020" level="10" frequency="5" timeframe="60">
+    <if_matched_sid>5710</if_matched_sid>
+    <same_source_ip />
+    <description>HIDS Alert: Multiple SSH authentication failures detected from same IP ($(srcip)) within 60s - Active Response IP Block Triggered</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+    <group>authentication_failures,brute_force,active_response,</group>
+  </rule>
+
+</group>
